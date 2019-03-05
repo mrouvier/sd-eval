@@ -20,56 +20,49 @@
 
 #include "Turn.h"
 
-Turn_Entry::Turn_Entry(int _type)
-{
-  type = _type;
+Turn_Entry::Turn_Entry(int _type) {
+    type = _type;
 }
 
-Turn_Entry::~Turn_Entry()
-{
+Turn_Entry::~Turn_Entry() {
 }
 
 
-Turn_Event::Turn_Event(int _type, int _extent, string _desc) : Turn_Entry(EVENT)
-{
-  type = _type;
-  extent = _extent;
-  desc = _desc;
+Turn_Event::Turn_Event(int _type, int _extent, string _desc) : Turn_Entry(EVENT) {
+    type = _type;
+    extent = _extent;
+    desc = _desc;
 }
 
-Turn_Event::~Turn_Event()
-{
+Turn_Event::~Turn_Event() {
 }
 
-Turn::Turn(Speaker *_spk, Section *_sec, int _stime, int _etime)
-{
-  spk = _spk;
-  sec = _sec;
-  stime = _stime;
-  etime = _etime;
-  superposed = false;
-  backchannel_type = PRIMARY;
-  refcount = 1;
+Turn::Turn(Speaker *_spk, Section *_sec, int _stime, int _etime) {
+    spk = _spk;
+    sec = _sec;
+    stime = _stime;
+    etime = _etime;
+    superposed = false;
+    backchannel_type = PRIMARY;
+    refcount = 1;
 }
 
-Turn::~Turn()
-{
-  for(vector<Turn_Entry *>::const_iterator i = ents.begin(); i != ents.end(); i++)
-    delete *i;
+Turn::~Turn() {
+    for(vector<Turn_Entry *>::const_iterator i = ents.begin(); i != ents.end(); i++)
+        delete *i;
 }
 
 
 // ILYA_TDF
-Turn& Turn::operator+=(const Turn& turn_to_add)
-  {
-	if (turn_to_add.stime < stime)
-	  stime = turn_to_add.stime;
-	if (turn_to_add.etime > etime)
-	  etime = turn_to_add.etime;
+Turn& Turn::operator+=(const Turn& turn_to_add) {
+    if (turn_to_add.stime < stime)
+        stime = turn_to_add.stime;
+    if (turn_to_add.etime > etime)
+        etime = turn_to_add.etime;
 
-      for(vector<Turn_Entry *>::const_iterator i = turn_to_add.ents.begin(); i != turn_to_add.ents.end(); i++) {
-     	  ents.push_back(*i);
-      }
+    for(vector<Turn_Entry *>::const_iterator i = turn_to_add.ents.begin(); i != turn_to_add.ents.end(); i++) {
+        ents.push_back(*i);
+    }
 
     return *this;
-  }
+}

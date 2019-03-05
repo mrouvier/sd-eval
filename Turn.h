@@ -27,66 +27,66 @@
 using namespace std;
 
 class Turn_Entry {
-public:
-  enum { TEXT, SYNC, EVENT, CTM};
-  int type;
+    public:
+        enum { TEXT, SYNC, EVENT, CTM};
+        int type;
 
-  Turn_Entry(int type);
-  virtual ~Turn_Entry();
+        Turn_Entry(int type);
+        virtual ~Turn_Entry();
 };
 
 
 class Turn_Event : public Turn_Entry {
-public:
-  enum { NOISE, LEX, PRON, LANG, ENTITY };
-  enum { BEGIN, END, PREVIOUS, NEXT, INSTANT };
+    public:
+        enum { NOISE, LEX, PRON, LANG, ENTITY };
+        enum { BEGIN, END, PREVIOUS, NEXT, INSTANT };
 
-  int type, extent;
-  string desc;
+        int type, extent;
+        string desc;
 
-  Turn_Event(int type, int extent, string desc);
-  virtual ~Turn_Event();
+        Turn_Event(int type, int extent, string desc);
+        virtual ~Turn_Event();
 };
 
 class Turn {
-public:
-  enum { PRIMARY, BACKCHANNEL, OUT_FIELD, COMPLEMENTARY, TURN_REQUEST };
+    public:
+        enum { PRIMARY, BACKCHANNEL, OUT_FIELD, COMPLEMENTARY, TURN_REQUEST };
 
-  class Speaker *spk;
-  class Section *sec;
+        class Speaker *spk;
+        class Section *sec;
 
-  struct time_sort {
-    bool operator() (const Turn *t1, const Turn *t2) const {
-      return t1->stime == t2->stime ? t1->etime < t2->etime : t1->stime < t2->stime;
-    }
-  };
+        struct time_sort {
+            bool operator() (const Turn *t1, const Turn *t2) const {
+                return t1->stime == t2->stime ? t1->etime < t2->etime : t1->stime < t2->stime;
+            }
+        };
 
-  int channel, stime, etime;
-  bool superposed;
-  int backchannel_type;
+        int channel, stime, etime;
+        bool superposed;
+        int backchannel_type;
 
-  string mode, fidelity;
+        string mode, fidelity;
 
-  vector<Turn_Entry *> ents;
+        vector<Turn_Entry *> ents;
 
-  Turn(Speaker *spk, Section *sec, int stime, int etime);
-  ~Turn();
+        Turn(Speaker *spk, Section *sec, int stime, int etime);
+        ~Turn();
 
-  void add_event(int type, int extent, string desc);
+        void add_event(int type, int extent, string desc);
 
-  void ref() { refcount++; }
-  void unref() { refcount--; if(!refcount) delete this; }
+        void ref() { refcount++; }
+        void unref() { refcount--; if(!refcount) delete this; }
 
-  // ILYA_TDF
-  Turn& operator+=(const Turn& turn_to_add);
+        // ILYA_TDF
+        Turn& operator+=(const Turn& turn_to_add);
 
-private:
-  int refcount;
+    private:
+        int refcount;
 };
 inline Turn operator+(Turn lhs, const Turn& rhs)
 {
-  lhs += rhs;
-  return lhs;
+    lhs += rhs;
+    return lhs;
 }
 
 #endif

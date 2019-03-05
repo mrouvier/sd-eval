@@ -22,33 +22,33 @@
 #define OPTASSIGN_H
 
 class OptAssign {
-public:
-  int nbElement;
-  int *cost;
-  int *lx;
-  int *ly;
-  int max_match;
-  int *xy;              
-  int *yx;              
-  bool *S;
-  bool *T;        
-  int *slack;           
-  int *slackx;          
-  int *prev; 
+    public:
+        int nbElement;
+        int *cost;
+        int *lx;
+        int *ly;
+        int max_match;
+        int *xy;              
+        int *yx;              
+        bool *S;
+        bool *T;        
+        int *slack;           
+        int *slackx;          
+        int *prev; 
 
-  OptAssign(int n);
-  ~OptAssign();
+        OptAssign(int n);
+        ~OptAssign();
 
-  void clear_cost_values();
-  void set_cost_value(int x, int y, int val);
-  int *munker();
+        void clear_cost_values();
+        void set_cost_value(int x, int y, int val);
+        int *munker();
 
-private:
-  int get_cost(int, int);
-  void init_labels();
-  void update_labels();
-  void add_edge(int, int);
-  void find_assignement();
+    private:
+        int get_cost(int, int);
+        void init_labels();
+        void update_labels();
+        void add_edge(int, int);
+        void find_assignement();
 };
 
 #endif

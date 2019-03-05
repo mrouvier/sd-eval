@@ -22,50 +22,43 @@
 #include <stdio.h>
 #include <algorithm>
 
-Section::Section()
-{
+Section::Section() {
 }
 
-Section::Section(const Section &s)
-{
-  mode = s.mode;
-  stime = s.stime;
-  etime = s.etime;
-  turns = s.turns;
-  for(vector<Turn *>::const_iterator i = turns.begin(); i != turns.end(); i++)
-    (*i)->ref();
+Section::Section(const Section &s) {
+    mode = s.mode;
+    stime = s.stime;
+    etime = s.etime;
+    turns = s.turns;
+    for(vector<Turn *>::const_iterator i = turns.begin(); i != turns.end(); i++)
+        (*i)->ref();
 }
 
-Section::~Section()
-{
-  for(vector<Turn *>::const_iterator i = turns.begin(); i != turns.end(); i++)
-    (*i)->unref();
+Section::~Section() {
+    for(vector<Turn *>::const_iterator i = turns.begin(); i != turns.end(); i++)
+        (*i)->unref();
 }
 
-Section *Sections::add(int mode, int stime, int etime)
-{
-  int id = s.size();
-  s.resize(id+1);
-  Section *sec = &s[id];
-  sec->mode = mode;
-  sec->stime = stime;
-  sec->etime = etime;
-  return sec;
+Section *Sections::add(int mode, int stime, int etime) {
+    int id = s.size();
+    s.resize(id+1);
+    Section *sec = &s[id];
+    sec->mode = mode;
+    sec->stime = stime;
+    sec->etime = etime;
+    return sec;
 }
 
-void Section::fix_times(int new_stime, int new_etime)
-{
-	stime = new_stime;
-	etime = new_etime;
+void Section::fix_times(int new_stime, int new_etime) {
+    stime = new_stime;
+    etime = new_etime;
 }
 
-void Sections::sort_turns()
-{
-  for(unsigned int i=0; i != s.size(); i++)
-    s[i].sort_turns();
+void Sections::sort_turns() {
+    for(unsigned int i=0; i != s.size(); i++)
+        s[i].sort_turns();
 }
 
-void Section::sort_turns()
-{
-  sort(turns.begin(), turns.end(), Turn::time_sort());
+void Section::sort_turns() {
+    sort(turns.begin(), turns.end(), Turn::time_sort());
 }

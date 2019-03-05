@@ -20,85 +20,66 @@
 
 #include "Speaker.h"
 #include "Util.h"
+#include "Error.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <algorithm>
 
-Speaker::Speaker(string _name) : name(_name)
-{
+Speaker::Speaker(string _name) : name(_name) {
+
 }
 
-Speaker::~Speaker()
-{
-  for(vector<Turn *>::const_iterator i = turns.begin(); i != turns.end(); i++)
-    (*i)->unref();
+Speaker::~Speaker() {
+    for(vector<Turn *>::const_iterator i = turns.begin(); i != turns.end(); i++)
+        (*i)->unref();
 }
 
-void Speaker::set_type(string value)
-{
-  field_set("speaker type", type, value);
+void Speaker::set_type(string value) {
+    field_set("speaker type", type, value);
 }
 
-void Speaker::set_dialect(string value)
-{
-  field_set("speaker dialect", dialect, value);
+void Speaker::field_set(const char *name, string &var, string value) {
+    if(true || var.length() == 0) {
+        var = value;
+        return;
+    }
+
+    if(var == value)
+        return;
+
+    SDEVAL_ASSERT(false, "Speaker: Error, setting field "+string(name)+" to a different value ("+var+" -> "+value+")");
+    exit(1);
 }
 
-void Speaker::set_accent(string value)
-{
-  field_set("speaker accent", accent, value);
+void Speaker::sort_turns() {
+    sort(turns.begin(), turns.end(), Turn::time_sort());
 }
 
-void Speaker::field_set(const char *name, string &var, string value)
-{
-  if(true || var.length() == 0) {
-    var = value;
-    return;
-  }
-
-  if(var == value)
-    return;
-
-  fprintf(stderr, "Speaker: Error, setting field %s to a different value (%s -> %s)\n",
-	  name, to_utf8(var).c_str(), to_utf8(value).c_str());
-  exit(1);
+Speakers::Speakers() {
 }
 
-void Speaker::sort_turns()
-{
-  sort(turns.begin(), turns.end(), Turn::time_sort());
+Speakers::~Speakers() {
+    for(unsigned int i=0; i != spks.size(); i++)
+        delete spks[i];
 }
 
-Speakers::Speakers()
-{
+Speaker *Speakers::find(string name) const {
+    map<string, Speaker *>::const_iterator i = spkm.find(name);
+    return i == spkm.end() ? 0 : i->second;
 }
 
-Speakers::~Speakers()
-{
-  for(unsigned int i=0; i != spks.size(); i++)
-    delete spks[i];
+Speaker *Speakers::get(string name) {
+    Speaker *s = find(name);
+    if(!s) {
+        s = new Speaker(name);
+        spks.push_back(s);
+        spkm[name] = s;
+    }
+    return s;
 }
 
-Speaker *Speakers::find(string name) const
-{
-  map<string, Speaker *>::const_iterator i = spkm.find(name);
-  return i == spkm.end() ? 0 : i->second;
-}
-
-Speaker *Speakers::get(string name)
-{
-  Speaker *s = find(name);
-  if(!s) {
-    s = new Speaker(name);
-    spks.push_back(s);
-    spkm[name] = s;
-  }
-  return s;
-}
-
-void Speakers::sort_turns()
-{
-  for(unsigned int i=0; i != spks.size(); i++)
-    spks[i]->sort_turns(); 
+void Speakers::sort_turns() {
+    for(unsigned int i=0; i != spks.size(); i++)
+        spks[i]->sort_turns(); 
 }

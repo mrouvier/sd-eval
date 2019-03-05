@@ -32,7 +32,7 @@ class Speaker {
 public:
   string name;
 
-  string type, dialect, accent;
+  string type;//, dialect, accent;
 
   bool global;
 
@@ -42,8 +42,8 @@ public:
   ~Speaker();
 
   void set_type(string type);
-  void set_dialect(string dialect);
-  void set_accent(string accent);
+//  void set_dialect(string dialect);
+//  void set_accent(string accent);
 
   void sort_turns();
 
