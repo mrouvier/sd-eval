@@ -29,7 +29,7 @@ Single-show evaluation using an UEM file :
 Single-show evaluation using a 250ms collar :
 
 ```bash
-./sd-eval -d 150 hypothesis.mdtm reference.mdtm
+./sd-eval -d 250 hypothesis.mdtm reference.mdtm
 ```
 
 Cross-show evaluation :
