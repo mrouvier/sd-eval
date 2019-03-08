@@ -18,6 +18,8 @@
 #include <iostream>
 #include <iomanip>
 #include "MDTM.h"
+#include "RTTM.h"
+#include "DiaFormat.h"
 #include "UEM.h"
 #include "SdResultat.h"
 #include "Logging.h"
@@ -33,32 +35,51 @@ int main(int argc, char** argv) {
     string uem_file = "";
     string hyp_file;
     string ref_file;
+    string hyp_format = "mdtm";
+    string ref_format = "mdtm";
     int collar = 250;
     bool cross_show=false;
 
     auto cli = (
-            (option("-u", "--uem").doc("UEM files") & value("u", uem_file)),
-            (option("-c", "--collar").doc("Collar") & value("c", collar)),
-            option("-x").set(cross_show).doc("Cross show evaluation"),
+            with_suffix("=", (option("--hyp-format").doc("Hypothesis format") & value("hyp-format", hyp_format))),
+            with_suffix("=", (option("--ref-format").doc("Reference format") & value("ref-format", ref_format))),
+            with_suffix("=", (option("--uem").doc("UEM files") & value("uem", uem_file))),
+            with_suffix("=", (option("--collar").doc("Collar") & value("collar", collar))),
+            option("--cross-show").doc("Cross show evaluation").set(cross_show),
             value("hypothesis file", hyp_file),
             value("reference file", ref_file)
             );
 
 
     if(!parse(argc, argv, cli)) {
-        cerr << make_man_page(cli, argv[0]);
+        auto fmt = doc_formatting{}.doc_column(40);
+        cerr << make_man_page(cli, argv[0], fmt);
         return EXIT_FAILURE;
     }
 
     try {
 
         SDEVAL_ASSERT(collar >= 0, "Error collar must be positive");
+        SDEVAL_ASSERT(hyp_format == "rttm" || hyp_format == "mdtm","Error format hypothesis");
+        SDEVAL_ASSERT(ref_format == "rttm" || ref_format == "mdtm","Error format reference");
 
-        MDTM* hyp = mdtm_file_parse(hyp_file);
-        MDTM* ref = mdtm_file_parse(ref_file);
+        DiaFormat* hyp = NULL;
+        DiaFormat* ref = NULL;
         UEM* uem = NULL;
+
+        if(hyp_format == "mdtm")
+            hyp = mdtm_file_parse(hyp_file);
+        if(hyp_format == "rttm")
+            hyp = rttm_file_parse(hyp_file);
+
+        if(ref_format == "mdtm")
+            ref = mdtm_file_parse(ref_file);
+        if(ref_format == "rttm")
+            ref = rttm_file_parse(ref_file);
+
         if(uem_file != "")
             uem = uem_file_parse(uem_file);
+
         map<string,map<int, SdResult *> > result;
 
         sd_evaluate(ref, hyp, result, collar, uem, cross_show);

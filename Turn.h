@@ -18,8 +18,8 @@
 
 
 
-#ifndef TURN_H
-#define TURN_H
+#ifndef __SDEVAL_TURN_H__
+#define __SDEVAL_TURN_H__
 
 #include <string>
 #include <vector>

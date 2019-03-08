@@ -18,27 +18,27 @@
 
 
 
-#ifndef MTDM_H
-#define MTDM_H
+#ifndef __SDEVAL_MTDM_H__
+#define __SDEVAL_MTDM_H__
 
 #include <iostream>
-#include "Speaker.h"
-#include "Section.h"
 #include <fstream>
 #include <map>
+
+#include "Speaker.h"
+#include "Section.h"
+#include "DiaFormat.h"
 
 
 using namespace std;
 
-class MDTM {
+class MDTM : public DiaFormat {
     public:
-        map<string, map<int,Speakers *> > spks;
-
         MDTM();
         ~MDTM();
 };
 
-MDTM* mdtm_file_parse(const string&);
+DiaFormat* mdtm_file_parse(const string&);
 
 #endif
 

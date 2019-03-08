@@ -18,8 +18,8 @@
 
 
 
-#ifndef SECTION_H
-#define SECTION_H
+#ifndef __SDEVAL_SECTION_H__
+#define __SDEVAL_SECTION_H__
 
 #include "Turn.h"
 

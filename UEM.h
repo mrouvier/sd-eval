@@ -18,8 +18,8 @@
 
 
 
-#ifndef UEM_H
-#define UEM_H
+#ifndef __SDEVAL_UEM_H__
+#define __SDEVAL_UEM_H__
 
 #include <string>
 #include <map>

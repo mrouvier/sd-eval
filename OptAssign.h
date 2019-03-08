@@ -18,8 +18,8 @@
 
 
 
-#ifndef OPTASSIGN_H
-#define OPTASSIGN_H
+#ifndef __SDEVAL_OPTASSIGN_H__
+#define __SDEVAL_OPTASSIGN_H__
 
 class OptAssign {
     public:

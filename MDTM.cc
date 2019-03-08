@@ -16,6 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <iostream>
 
 #include "MDTM.h"
 #include "Speaker.h"
@@ -23,22 +24,15 @@
 #include "Logging.h"
 #include "Error.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
 
 using namespace std;
 
 MDTM::MDTM() { }
 
-MDTM::~MDTM() {
-    for(map<string, map<int, Speakers *> >::const_iterator i = spks.begin(); i != spks.end(); i++)
-        for(map<int, Speakers *>::const_iterator j = i->second.begin(); j != i->second.end(); j++)
-            delete j->second;
-}
+MDTM::~MDTM() { }
 
-MDTM* mdtm_file_parse(const string& s) {
-    MDTM *mdtm = new MDTM();
+DiaFormat* mdtm_file_parse(const string& s) {
+    DiaFormat* mdtm = new MDTM();
 
     string line;
 

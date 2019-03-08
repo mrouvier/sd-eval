@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#ifndef ERROR_H
-#define ERROR_H
+#ifndef __SDEVAL_ERROR_H__
+#define __SDEVAL_ERROR_H__
 
 #include <iostream>
 #include "Logging.h"

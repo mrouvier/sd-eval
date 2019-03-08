@@ -22,20 +22,25 @@ Single-show evaluation :
 Single-show evaluation using an UEM file :
 
 ```bash
-./sd-eval -u reference.uem hypothesis.mdtm reference.mdtm
+./sd-eval --uem=reference.uem hypothesis.mdtm reference.mdtm
 ```
 
 
 Single-show evaluation using a 250ms collar :
 
 ```bash
-./sd-eval -c 250 hypothesis.mdtm reference.mdtm
+./sd-eval --collar=250 hypothesis.mdtm reference.mdtm
+```
+
+Single-show evaluation on RTTM file :
+```bash
+./sd-eval --hyp-format=rttm --ref-format=rttm hypothesis.rttm reference.rttm
 ```
 
 Cross-show evaluation :
 
 ```bash
-./sd-eval -x hypothesis.mdtm reference.mdtm
+./sd-eval --cross-show hypothesis.mdtm reference.mdtm
 ```
 
 Example output :

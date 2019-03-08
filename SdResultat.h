@@ -18,11 +18,11 @@
 
 
 
-#ifndef _SDRESULT_H_
-#define _SDRESULT_H_
+#ifndef __SDEVAL_SDRESULT_H__
+#define __SDEVAL_SDRESULT_H__
 #include "Speaker.h"
 #include <list>
-#include "MDTM.h"
+#include "DiaFormat.h"
 #include "UEM.h"
 #include "CrossFile.h"
 
@@ -61,7 +61,7 @@ public:
   vector<string> ref_names, hyp_names;
 
   SdResult(Speakers *ref, Speakers *hyp, int delta, const UEM::rlist *uem = NULL);
-  SdResult(const MDTM * , const MDTM * , int, const UEM *);
+  SdResult(const DiaFormat* , const DiaFormat* , int, const UEM *);
   ~SdResult();
 
   void print_ser(Speakers * , Speakers * );
@@ -134,7 +134,7 @@ private:
   void flist_merge(const flist &f1, const flist &f2, int m1_post, int m2_post, int (*merge)(int, int), flist &result);
 };
 
-void sd_evaluate(const MDTM * ref, const MDTM *  hyp, map<string,map<int, SdResult *> > & result, int delta, const UEM *, bool);
+void sd_evaluate(const DiaFormat* ref, const DiaFormat*  hyp, map<string,map<int, SdResult *> > & result, int delta, const UEM *, bool);
 void compute_global_ser(map<string,map<int, SdResult *> > & result);
 void print_uem_range(const UEM * uem);
 

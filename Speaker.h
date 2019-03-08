@@ -18,8 +18,8 @@
 
 
 
-#ifndef SPEAKER_H
-#define SPEAKER_H
+#ifndef __SDEVAL_SPEAKER_H__
+#define __SDEVAL_SPEAKER_H__
 
 #include <map>
 #include <vector>

@@ -17,8 +17,8 @@
 
 
 
-#ifndef LOGGING_H
-#define LOGGING_H
+#ifndef __SDEVAL_LOGGING_H__
+#define __SDEVAL_LOGGING_H__
 
 #include <iostream>
 #include <sstream>

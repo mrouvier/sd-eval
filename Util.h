@@ -18,8 +18,8 @@
 
 
 
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef __SDEVAL_UTIL_H__
+#define __SDEVAL_UTIL_H__
 
 #include <string>
 #include <vector>
